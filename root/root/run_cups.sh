@@ -39,9 +39,11 @@ fi
 
 /usr/sbin/avahi-daemon --daemonize
 /usr/sbin/cupsd -c /config/cupsd.conf
-lpinfo -v
+#lpinfo -m   #list all printer driver
+lpinfo -v  #list all printer backend
+#lpadmin add new printer
 lpadmin -p HL2140CUPS -E -v socket://192.168.99.53 -m $(lpinfo --make-and-model "Brother HL-2140 series" -m | grep 2140 | sed -e  's/ .*//g')
-lpstat -v
+lpstat -v  #show current printer list and stat
 /root/printer-update.sh &
 sh
 #exec /usr/sbin/cupsd -f -c /config/cupsd.conf
