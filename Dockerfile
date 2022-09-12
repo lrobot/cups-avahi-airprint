@@ -1,7 +1,7 @@
 FROM alpine:3.16
 
 # Install the packages we need. Avahi will be included
-RUN echo -e "http://nl.alpinelinux.org/alpine/edge/testing\nhttp://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories &&\
+RUN echo -e "http://mirrors.aliyun.com/alpine/edge/community\nhttp://mirrors.aliyun.com/alpine/edge/testing\nhttp://mirrors.aliyun.com/alpine/edge/main" > /etc/apk/repositories &&\
 	apk add --update cups \
 	cups-libs \
 	cups-pdf \
@@ -37,7 +37,6 @@ VOLUME /services
 # Add scripts
 ADD root /
 RUN chmod +x /root/*
-
 #Run Script
 CMD ["/root/run_cups.sh"]
 

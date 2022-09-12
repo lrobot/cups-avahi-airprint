@@ -1,6 +1,9 @@
 #!/bin/sh
 set -e
 set -x
+ifconfig
+addgroup root lpadmin
+
 
 # Is CUPSADMIN set? If not, set to default
 if [ -z "$CUPSADMIN" ]; then
@@ -35,5 +38,11 @@ if [ `ls -l /config/cupsd.conf 2>/dev/null | wc -l` -eq 0 ]; then
 fi
 
 /usr/sbin/avahi-daemon --daemonize
+/usr/sbin/cupsd -c /config/cupsd.conf
+lpinfo -v
+lpadmin -p HL2140CUPS -E -v socket://192.168.99.53 -m $(lpinfo --make-and-model "Brother HL-2140 series" -m | grep 2140 | sed -e  's/ .*//g')
+lpstat -v
 /root/printer-update.sh &
-exec /usr/sbin/cupsd -f -c /config/cupsd.conf
+sh
+#exec /usr/sbin/cupsd -f -c /config/cupsd.conf
+
